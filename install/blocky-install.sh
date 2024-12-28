@@ -54,7 +54,7 @@ upstreams:
   # optional: Determines what strategy blocky uses to choose the upstream servers.
   # accepted: parallel_best, strict, random
   # default: parallel_best
-  strategy: parallel_best
+  #strategy: parallel_best
   # optional: timeout to query the upstream resolver. Default: 2s
   #timeout: 2s
   # optional: HTTP User Agent when connecting to upstreams. Default: none
@@ -67,7 +67,7 @@ upstreams:
 
 # optional: custom IP address(es) for domain name (with all sub-domains). Multiple addresses must be separated by a comma
 # example: query "printer.lan" or "my.printer.lan" will return 192.168.178.3
-#customDNS:
+customDNS:
   #customTTL: 1h
   # optional: if true (default), return empty result for unmapped query types (for example TXT, MX or AAAA if only IPv4 address is defined).
   # if false, queries with unmapped types will be forwarded to the upstream resolver
@@ -80,7 +80,7 @@ upstreams:
 
 # optional: definition, which DNS resolver(s) should be used for queries to the domain (with all sub-domains). Multiple resolvers must be separated by a comma
 # Example: Query client.fritz.box will ask DNS server 192.168.178.1. This is necessary for local network, to resolve clients by host name
-#conditional:
+conditional:
   # optional: if false (default), return empty result if after rewrite, the mapped resolver returned an empty answer. If true, the original query will be sent to the upstream resolver
   # Example: The query "blog.example.com" will be rewritten to "blog.fritz.box" and also redirected to the resolver at 192.168.178.1. If not found and if 'fallbackUpstream' was set to 'true', the original query "blog.example.com" will be sent upstream.
   # Usage: One usecase when having split DNS for internal and external (internet facing) users, but not all subdomains are listed in the internal domain.
@@ -110,7 +110,7 @@ blocking:
   # definition of allowlist groups.
   # Note: if the same group has both allow/denylists, allowlists take precedence. Meaning if a domain is both blocked and allowed, it will be allowed.
   # If a group has only allowlist entries, only domains from this list are allowed, and all others be blocked.
-  #allowlists:
+  allowlists:
     #ads:
       #- allowlist.txt
       #- |
@@ -135,7 +135,7 @@ blocking:
   # zeroIp: 0.0.0.0 will be returned (default)
   # nxDomain: return NXDOMAIN as return code
   # comma separated list of destination IP addresses (for example: 192.100.100.15, 2001:0db8:85a3:08d3:1319:8a2e:0370:7344). Should contain ipv4 and ipv6 to cover all query types. Useful with running web server on this address to display the "blocked" page.
-  blockType: zeroIp
+  #blockType: zeroIp
   # optional: TTL for answers to blocked domains
   # default: 6h
   blockTTL: 1m
@@ -224,7 +224,7 @@ prometheus:
 # optional: write query information (question, answer, client, duration etc.) to daily csv file
 queryLog:
   # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console
-  #type: mysql
+  type:
   # directory (should be mounted as volume in docker) for csv, db connection string for mysql/postgresql
   #target: db_user:db_password@tcp(db_host_or_ip:3306)/db_name?charset=utf8mb4&parseTime=True&loc=Local
   #postgresql target: postgres://user:password@db_host_or_ip:5432/db_name
@@ -275,7 +275,7 @@ redis:
 #keyFile: server.key
 
 # optional: use these DNS servers to resolve denylist urls and upstream DNS servers. It is useful if no system DNS resolver is configured, and/or to encrypt the bootstrap queries.
-#bootstrapDns:
+bootstrapDns:
   #- tcp+udp:1.1.1.1
   #- https://1.1.1.1/dns-query
   #- upstream: https://dns.digitale-gesellschaft.ch/dns-query
@@ -349,7 +349,7 @@ ports:
 # optional: logging configuration
 log:
   # optional: Log level (one from trace, debug, info, warn, error). Default: info
-  #level: info
+  level: info
   # optional: Log format (text or json). Default: text
   #format: text
   # optional: log timestamps. Default: true
